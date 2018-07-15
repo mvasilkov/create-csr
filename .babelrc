@@ -1,0 +1,18 @@
+{
+  "compact": false,
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": [
+            "Chrome >= 53",
+            "Firefox >= 47",
+            "Safari >= 11",
+            "iOS >= 11.2"
+          ]
+        }
+      }
+    ]
+  ]
+}

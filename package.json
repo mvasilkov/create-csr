@@ -1,0 +1,19 @@
+{
+  "name": "create-csr",
+  "version": "0.0.0",
+  "description": "Create a CSR in browser",
+  "main": "app.js",
+  "repository": "git@github.com:mvasilkov/create-csr.git",
+  "author": "Mark Vasilkov",
+  "license": "MIT",
+  "dependencies": {
+    "pkijs": "^2.1.65"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.0.0-beta.53",
+    "babel-loader": "^8.0.0-beta.4",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
+  }
+}
