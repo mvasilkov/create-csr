@@ -13,7 +13,7 @@ const HASH_ALGORITHM = 'SHA-256'
 const SIGN_ALGORITHM = 'RSASSA-PKCS1-V1_5'
 
 /* Create PKCS#10 */
-function run() {
+function run(names) {
     const crypto = getCrypto()
     if (!crypto) return Promise.reject('No crypto')
 
@@ -29,15 +29,6 @@ function run() {
         type: '2.5.4.3',
         value: new asn1js.Utf8String({ value: 'Шячло попячтса попячтса' }),
     }))
-
-    const names = new GeneralNames({
-        names: [
-            new GeneralName({
-                type: 1,
-                value: 'foo@example.com',
-            }),
-        ],
-    })
 
     /* Create a new key pair */
     let publicKey
@@ -100,10 +91,25 @@ function formatPEM(pemString) {
     return resultString
 }
 
-run().then(pkcs10Buffer => {
-    let resultString = '-----BEGIN CERTIFICATE REQUEST-----\r\n'
-    resultString = `${resultString}${formatPEM(toBase64(arrayBufferToString(pkcs10Buffer)))}`
-    resultString = `${resultString}\r\n-----END CERTIFICATE REQUEST-----\r\n`
+document.getElementById('theForm').addEventListener('submit', function (event) {
+    const email = document.getElementById('email').value
 
-    console.log(resultString)
+    const names = new GeneralNames({
+        names: [
+            new GeneralName({
+                type: 1,
+                value: email || 'foo@example.com',
+            }),
+        ],
+    })
+
+    run(names).then(pkcs10Buffer => {
+        let resultString = '-----BEGIN CERTIFICATE REQUEST-----\r\n'
+        resultString = `${resultString}${formatPEM(toBase64(arrayBufferToString(pkcs10Buffer)))}`
+        resultString = `${resultString}\r\n-----END CERTIFICATE REQUEST-----\r\n`
+
+        console.log(resultString)
+    })
+
+    event.preventDefault()
 })
